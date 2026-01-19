@@ -43,7 +43,7 @@ MEC_AQIM_tools extract --stego-vd ./tmp_variable/2_s.mp4 --adaptive-pcaInterval-
 \## Calculate Bit Error Rate (BER)
 \## Compare communication success rate: use recovered_msg_bits.npy and base_orig_data_bits.npy
 \## Calculate Bit Error Rate: use recovered_encoded
-MEC_AQIM_tools compare --file1 ./tmp_variable/base_orig_data_bits.npy --file2 ./tmp_variable/recovered_msg_bits.npy
+MEC_AQIM_tools compare --file1 ./tmp_variable/base_orig_data_bits.npy --file2 ./tmp_variable/base_recovered_msg_bits.npy
 
 ```
 
@@ -52,7 +52,7 @@ MEC_AQIM_tools compare --file1 ./tmp_variable/base_orig_data_bits.npy --file2 ./
 Embed an npy format message into a video carrier to generate a stego video.
 
 ```
-AQIM_tools.exe embed 
+MEC_AQIM_tools.exe embed 
 --cover-vd ./cover/2.mp4                # Cover video, required
 --variable-dir ./tmp_variable           # Temporary directory, required
 --orig-QIM 20,400                       # Original QIM range parameter, required. MEC_AQIM will search for base_([orig-QIM])_adaptive_pcaInterval_QIM.npy in the [variable-dir] directory. If it exists, it will use the adaptive quantizer from that file. Otherwise, it will generate a new adaptive quantizer based on orig-QIM, which can take a long time.
@@ -80,7 +80,7 @@ Example: ffmpeg -i 2_s.mp4 -y -preset fast -crf 26 2_s_26.mp4
 4. recovered_msg_bits.npy is the restored bitstream after RS decoding, data recovery, etc.
 
 ```
-AQIM_tools.exe extract 
+MEC_AQIM_tools.exe extract 
 --stego-vd ./tmp_variable/2_s.mp4       # Stego video, required
 --adaptive-pcaInterval-QIM-file ./tmp_variable/base_(20, 400)_adaptive_pcaInterval_QIM.npy # Adaptive quantizer, required. This file is generated during the embedding process based on the set orig-QIM. The embedding and extraction processes must use the same quantizer to maintain accuracy.
 --variable-dir ./tmp_variable           # Temporary directory, required. Must be consistent with the directory used during embedding.
@@ -97,9 +97,9 @@ AQIM_tools.exe extract
 Compare the bit error rate of the extracted message.
 
 ```
-AQIM_tools.exe compare
+MEC_AQIM_tools.exe compare
 --file1 ./tmp_variable/base_orig_data_bits.npy  # Message file 1  
---file2 ./tmp_variable/recovered_msg_bits.npy   # Message file 2
+--file2 ./tmp_variable/base_recovered_msg_bits.npy   # Message file 2
 ```
 
 ## Robustness Explanation
