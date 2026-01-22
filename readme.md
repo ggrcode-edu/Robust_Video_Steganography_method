@@ -26,23 +26,23 @@ Open Windows Command Prompt (CMD) or PowerShell, navigate to the directory conta
 
 
 ```
-\## View help (recommended to execute first)
+## View help (recommended to execute first)
 MEC_AQIM_tools -h
 
-\## Embed, message file is a random bitstream, a list that can be replaced, loaded using numpy.load, elements are 01, e.g., [0,1,1,1,0,0,1,...].
-\## After embedding, two files will be generated in the specified temporary directory [variable-dir]: base_orig_encoded_data_bits.npy and base_orig_data_bits.npy.
-\## base_orig_encoded_data_bits.npy is the actual embedded bits after RS encoding, data shuffling, etc.
-\## base_orig_data_bits.npy is the original bitstream.
+## Embed, message file is a random bitstream, a list that can be replaced, loaded using numpy.load, elements are 01, e.g., [0,1,1,1,0,0,1,...].
+## After embedding, two files will be generated in the specified temporary directory [variable-dir]: base_orig_encoded_data_bits.npy and base_orig_data_bits.npy.
+## base_orig_encoded_data_bits.npy is the actual embedded bits after RS encoding, data shuffling, etc.
+## base_orig_data_bits.npy is the original bitstream.
 MEC_AQIM_tools embed --cover-vd ./cover/2.mp4 --variable-dir ./tmp_variable --orig-QIM 20,400 --msg-file ./tmp_variable/msg.npy
 
-\## Extract, extract the message file to the specified directory [variable-dir]
-\## Two files will be generated: recovered_encoded_data_bits.npy and recovered_msg_bits.npy
-\## recovered_encoded_data_bits.npy is the actually extracted bitstream, recovered_msg_bits.npy is the restored bitstream after RS decoding, data recovery, etc.
+## Extract, extract the message file to the specified directory [variable-dir]
+## Two files will be generated: recovered_encoded_data_bits.npy and recovered_msg_bits.npy
+## recovered_encoded_data_bits.npy is the actually extracted bitstream, recovered_msg_bits.npy is the restored bitstream after RS decoding, data recovery, etc.
 MEC_AQIM_tools extract --stego-vd ./tmp_variable/2_s.mp4 --adaptive-pcaInterval-QIM-file "./tmp_variable/base_(20, 400)_adaptive_pcaInterval_QIM.npy" --variable-dir ./tmp_variable
 
-\## Calculate Bit Error Rate (BER)
-\## Compare communication success rate: use recovered_msg_bits.npy and base_orig_data_bits.npy
-\## Calculate Bit Error Rate: use recovered_encoded
+## Calculate Bit Error Rate (BER)
+## Compare communication success rate: use recovered_msg_bits.npy and base_orig_data_bits.npy
+## Calculate Bit Error Rate: use recovered_encoded
 MEC_AQIM_tools compare --file1 ./tmp_variable/base_orig_data_bits.npy --file2 ./tmp_variable/base_recovered_msg_bits.npy
 
 ```
